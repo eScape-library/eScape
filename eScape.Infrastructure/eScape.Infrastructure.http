@@ -1,0 +1,6 @@
+@eScape.Infrastructure_HostAddress = http://localhost:5109
+
+GET {{eScape.Infrastructure_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
