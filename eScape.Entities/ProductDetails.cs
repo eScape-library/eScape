@@ -15,6 +15,7 @@ namespace eScape.Entities
         public decimal Price { get; set; }
         public int Quantity { get; set; }
         public string ProductImage { get; set; }
+        public string SubImage { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? DeletedAt { get; set; }
         public bool IsDeleted { get; set; }

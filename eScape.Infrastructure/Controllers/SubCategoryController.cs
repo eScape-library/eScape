@@ -5,6 +5,7 @@ using eScape.UseCase.DTOs;
 using eScape.Infrastructure.SqlServer.Repositories;
 using eScape.UseCase.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using eScape.Core.Helper;
 
 namespace eScape.Infrastructure.Controllers
 {
@@ -19,11 +20,15 @@ namespace eScape.Infrastructure.Controllers
             _mapper = mapper;
             _subCategoryRepository = subCategoryRepository;
         }
-        [HttpGet]
+        [HttpGet()]
         public async Task<IActionResult> GetSubCategoriesAsync()
         {
             var categories = await _subCategoryRepository.GetSubCategoriesAsync();
             var result = _mapper.Map<IEnumerable<SubCategoryDTO>>(categories);
+            foreach (var item in result)
+            {
+                item.Slug = SlugHelpler.CreateSlug(item.SubCategoryName);
+            }
             return Ok(result);
         }
         [HttpPost]

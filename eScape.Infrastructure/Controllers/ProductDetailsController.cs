@@ -25,6 +25,7 @@ namespace eScape.Infrastructure.Controllers
             var productDetailss = await _productDetailsRepository.GetProductDetailsAsync();
             return Ok(productDetailss);
         }
+        
         [HttpPost]
         public async Task<IActionResult> CreateProductDetailsAsync([FromBody] ProductDetailsDTO productDetailsDto)
         {

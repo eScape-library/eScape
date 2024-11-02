@@ -18,13 +18,6 @@ namespace eScape.Infrastructure.SqlServer.Repositories
 {
     public class SubCategoryRepository : DapperBase, ISubCategoryRepository
     {
-        private readonly IMapper _mapper;
-
-        public SubCategoryRepository(IMapper mapper)
-        {
-            _mapper = mapper;
-        }
-
         public async Task<IEnumerable<SubCategoryDTO>> GetSubCategoriesAsync()
         {
             return await WithConnection(async connection =>
