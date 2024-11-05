@@ -20,12 +20,19 @@ namespace eScape.Infrastructure.Controllers
             _productDetailsRepository = productDetailsRepository;
         }
         [HttpGet]
-        public async Task<IActionResult> GetProductDetailsAsync()
+        public async Task<IActionResult> GetAllProductDetailsAsync()
         {
             var productDetailss = await _productDetailsRepository.GetProductDetailsAsync();
             return Ok(productDetailss);
         }
-        
+
+        [HttpGet("{productDetailsId:int}")]
+        public async Task<IActionResult> GetAProductDetailsAsync(int productDetailsId)
+        {
+            var productDetailss = await _productDetailsRepository.GetProductDetailsByIdAsync(productDetailsId);
+            return Ok(productDetailss);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateProductDetailsAsync([FromBody] ProductDetailsDTO productDetailsDto)
         {

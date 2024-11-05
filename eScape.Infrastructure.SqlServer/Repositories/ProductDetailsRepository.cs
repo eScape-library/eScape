@@ -12,6 +12,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Collections.Specialized.BitVector32;
 
 namespace eScape.Infrastructure.SqlServer.Repositories
 {
@@ -23,6 +24,49 @@ namespace eScape.Infrastructure.SqlServer.Repositories
             {
                 var result = await connection.QueryAsync<ProductDetailsDTO>(StoredProcedureName.UspGetProductDetails, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
                 return result.ToList();
+            });
+        }
+
+        public async Task<ProductDetailsWithFamiliar> GetProductDetailsByIdAsync(int id)
+        {
+            return await WithConnection(async connection =>
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add(Parameters.ProductDetailsId, id, DbType.Int32, ParameterDirection.Input);
+                var multi = await connection.QueryMultipleAsync(StoredProcedureName.UspGetProductDetailsById, param: parameters, commandType: CommandType.StoredProcedure);
+                var product = await multi.ReadFirstAsync<ProductDetailsDTO>();
+                var variantColor = await multi.ReadAsync<ProductDetailsDTO>();
+                var familiar = await multi.ReadAsync<CollectionDTO>();
+
+                var variants = new List<Variant>();
+                foreach (var item in variantColor)
+                {
+                    variants.Add(new Variant() 
+                    { 
+                        VariantColor = item, 
+                        VariantSize = await GetVariantSize(item.ProductId, item.ColorAttributeId) 
+                    });
+                }
+
+                return new ProductDetailsWithFamiliar()
+                {
+                    Product = product,
+                    Variants = variants,
+                    Familiar = familiar
+                };
+            });
+        }
+
+        public async Task<IEnumerable<ProductDetailsDTO>> GetVariantSize(int productId, int colorId)
+        {
+            return await WithConnection(async connection =>
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add(Parameters.ProductId, productId, DbType.Int32, ParameterDirection.Input);
+                parameters.Add(Parameters.ColorAttributeId, colorId, DbType.Int32, ParameterDirection.Input);
+                var variants = await connection.QueryAsync<ProductDetailsDTO>(StoredProcedureName.UspGetVariantsBySize, param: parameters, commandType: CommandType.StoredProcedure);
+
+                return variants.ToList();
             });
         }
 

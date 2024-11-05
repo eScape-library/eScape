@@ -11,6 +11,7 @@ namespace eScape.UseCase.Repositories
     public interface IProductDetailsRepository
     {
         Task<IEnumerable<ProductDetailsDTO>> GetProductDetailsAsync();
+        Task<ProductDetailsWithFamiliar> GetProductDetailsByIdAsync(int id); 
         Task<bool> UpdateProductDetailsAsync(ProductDetails productDetails, string action);
     }
 }
