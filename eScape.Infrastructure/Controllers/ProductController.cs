@@ -4,6 +4,7 @@ using eScape.UseCase.DTOs;
 using eScape.Entities;
 using eScape.UseCase.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace eScape.Infrastructure.Controllers
 {
@@ -19,6 +20,7 @@ namespace eScape.Infrastructure.Controllers
             _productRepository = productRepository;
         }
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetProductsAsync()
         {
             var products = await _productRepository.GetProductsAsync();

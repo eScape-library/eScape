@@ -34,6 +34,12 @@ namespace eScape.Infrastructure.SqlServer.Repositories.MapperProfile
 
             CreateMap<Promotion, PromotionDTO>();
             CreateMap<PromotionDTO, Promotion>();
+
+            CreateMap<User, UserDTO>();
+            CreateMap<UserDTO, User>();
+
+            CreateMap<RefreshToken, RefreshTokenDTO>();
+            CreateMap<RefreshTokenDTO, RefreshToken>();
         }
     }
 }

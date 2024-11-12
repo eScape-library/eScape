@@ -19,5 +19,6 @@ namespace eScape.Core.Const
         public static readonly string ProductId = "@ProductId";
         public static readonly string ColorAttributeId = "@ColorAttributeId";
         public static readonly string TotalRecord = "@TotalRecord";
+        public static readonly string UserName = "@UserName";
     }
 }

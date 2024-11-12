@@ -25,6 +25,10 @@ namespace eScape.Core.Const
         public static readonly string UspGetProductsByCategory = "uspGetProductsByCategory";
         public static readonly string UspGetProductDetailsById = "uspGetProductDetailsById";
         public static readonly string UspGetVariantsBySize = "uspGetVariantsBySize";
+        public static readonly string UspInsUpdUser = "uspInsUpdUser";
+        public static readonly string UspGetUser = "uspGetUser";
+        public static readonly string UspInsUpdRefreshToken = "uspInsUpdRefreshToken";
+        
     }
 
     public static class Actions
